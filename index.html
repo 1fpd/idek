@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Play Me</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Background Loop Video -->
+    <video autoplay muted loop id="bg-video">
+        <source src="loop0.mp4" type="video/mp4">
+    </video>
+
+    <!-- Main Video (hidden until triggered) -->
+    <video id="main-video" src="hi.mp4" preload="auto"></video>
+
+    <!-- Audio -->
+    <audio id="click-sound" src="mouse-click-sound.mp3"></audio>
+
+    <!-- Button -->
+    <div class="overlay">
+        <button class="play-button" onclick="triggerAction()">
+            👉 播放我 👈
+        </button>
+    </div>
+
+    <!-- Gif Screen (hidden until triggered) -->
+    <div id="end-screen">
+        <img src="h.gif" alt="">
+    </div>
+
+    <!-- Clock -->
+    <div id="clock-widget">
+        <span id="clock-icon">🕐</span>
+        <span id="clock-time"></span>
+    </div>
+
+    <script>
+        // Clock
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById("clock-time").textContent = `${hours}:${minutes}`;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // Main action
+        function triggerAction() {
+            const bgVideo = document.getElementById("bg-video");
+            const mainVideo = document.getElementById("main-video");
+            const sound = document.getElementById("click-sound");
+            const overlay = document.querySelector(".overlay");
+            const endScreen = document.getElementById("end-screen");
+            const clock = document.getElementById("clock-widget");
+
+            sound.play();
+
+            mainVideo.style.display = "block";
+            mainVideo.play();
+            bgVideo.style.display = "none";
+            overlay.style.display = "none";
+
+            mainVideo.addEventListener("ended", () => {
+                mainVideo.style.display = "none";
+                endScreen.style.display = "flex";
+                clock.style.display = "flex";
+
+                setTimeout(() => {
+                    endScreen.style.display = "none";
+                }, 400);
+            });
+        }
+    </script>
+
+</body>
+</html>
