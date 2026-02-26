@@ -26,17 +26,48 @@
         </button>
     </div>
 
-    <!-- Gif Screen (hidden until triggered) -->
+    <!-- Gif Screen -->
     <div id="end-screen">
         <img src="h.gif" alt="">
     </div>
 
-    <!-- Clock -->
-    <div id="clock-widget">
-        <span id="clock-icon">🕐</span>
-        <span id="clock-time"></span>
+    <!-- Hub Screen -->
+    <div id="hub-screen">
+
+        <!-- Clock -->
+        <div id="clock-widget">
+            <span id="clock-icon">🕐</span>
+            <span id="clock-time"></span>
+        </div>
+
+        <!-- Title -->
+        <div id="hub-title">
+            <span class="letter" onmouseenter="playLetterSound()">L</span>
+            <span class="letter" onmouseenter="playLetterSound()">a</span>
+            <span class="letter" onmouseenter="playLetterSound()">v</span>
+            <span class="letter" onmouseenter="playLetterSound()">e</span>
+            <span class="letter" onmouseenter="playLetterSound()">n</span>
+            <span class="letter" onmouseenter="playLetterSound()">d</span>
+            <span class="letter" onmouseenter="playLetterSound()">e</span>
+            <span class="letter" onmouseenter="playLetterSound()">r</span>
+            <span class="letter">&nbsp;</span>
+            <span class="letter" onmouseenter="playLetterSound()">h</span>
+            <span class="letter" onmouseenter="playLetterSound()">u</span>
+            <span class="letter" onmouseenter="playLetterSound()">b</span>
+        </div>
+
+        <!-- Bottom Icons -->
+        <div id="hub-icons">
+            <a href="#" class="hub-icon">🌐</a>
+            <a href="#" class="hub-icon">🏩</a>
+            <a href="#" class="hub-icon">🐶</a>
+        </div>
+
     </div>
-    
+
+    <!-- Letter hover sound — change src to your audio file -->
+    <audio id="letter-sound" src="your-letter-sound.mp3"></audio>
+
     <script>
         // Clock
         function updateClock() {
@@ -48,6 +79,13 @@
         updateClock();
         setInterval(updateClock, 1000);
 
+        // Letter sound
+        function playLetterSound() {
+            const sound = document.getElementById("letter-sound");
+            sound.currentTime = 0;
+            sound.play();
+        }
+
         // Main action
         function triggerAction() {
             const bgVideo = document.getElementById("bg-video");
@@ -55,7 +93,7 @@
             const sound = document.getElementById("click-sound");
             const overlay = document.querySelector(".overlay");
             const endScreen = document.getElementById("end-screen");
-            const clock = document.getElementById("clock-widget");
+            const hubScreen = document.getElementById("hub-screen");
 
             sound.play();
 
@@ -67,10 +105,10 @@
             mainVideo.addEventListener("ended", () => {
                 mainVideo.style.display = "none";
                 endScreen.style.display = "flex";
-                clock.style.display = "flex";
 
+                // Change 3000 to however long you want the gif to show
                 setTimeout(() => {
-                    endScreen.style.display = "none";
+                    hubScreen.style.display = "flex";
                 }, 400);
             });
         }
